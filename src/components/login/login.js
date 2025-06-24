@@ -62,11 +62,11 @@ const Login = () => {
   });
 
   return (
-    <form 
-      noValidate 
-      onSubmit={formik.handleSubmit} 
+    <form
+      noValidate
+      onSubmit={formik.handleSubmit}
       autoComplete="off"
-      style={{ marginTop: '2rem' }} // Added more space at the top
+      style={{ marginTop: "2rem" }} // Added more space at the top
     >
       <Stack spacing={3}>
         <TextField
@@ -196,7 +196,7 @@ const Login = () => {
               checked={rememberMe}
               onClick={() => setRememberMe(!rememberMe)}
               sx={{
-                color: "#30533E", // Changed checkbox color
+                color: "#FFFFFF", // Changed checkbox color
                 "&.Mui-checked": {
                   color: "#30533E", // Changed checked color
                 },
@@ -206,9 +206,9 @@ const Login = () => {
           label={
             <Typography
               variant="body2"
-              sx={{ color: "#30533E", fontSize: 14, mt: "5px" }} // Changed text color
+              sx={{ color: "#D5D5D5", fontSize: 14, mt: "5px" }}
             >
-              Remember me
+              keep me logged in
             </Typography>
           }
           labelPlacement="end"
@@ -216,7 +216,7 @@ const Login = () => {
         />
         <Typography
           variant="body2"
-          sx={{ color: "#14332D", cursor: "pointer", mt: "5px" }} // Changed forgot password color
+          sx={{ color: "#D5D5D5", cursor: "pointer", mt: "5px" }} // white
           onClick={() => router.push("/forgot-password-email")}
         >
           Forgot password?
@@ -228,14 +228,16 @@ const Login = () => {
         sx={{
           mt: 3,
           mb: 3,
-          borderRadius: 0, // No border radius
-          background: "#14332D !important", // Changed button background color
-          border: "2px solid #D6BFA3", // Added border with specified color
-          color: "#DDCBB1", // Changed text color
+          borderRadius: "10px",
+          background: "#D7AD5F !important",
+          border: "none",
+          color: "#14332D",
+          width: "399px",
+          height: "56px",
+          boxShadow: "none",
           "&:hover": {
-            background: "#14332D", // Same color on hover
+            background: "#D7AD5F",
           },
-          boxShadow: "none", // Removed shadow
           "&.Mui-disabled": {
             background: "#36373E",
             color: "rgba(255, 255, 255, 0.5)",
@@ -245,8 +247,30 @@ const Login = () => {
         variant="contained"
         disabled={!formik.values.username || !formik.values.password}
       >
-        <p className="mt-1">JOIN THE EXPERIENCE</p> {/* Changed button text */}
+        <p
+          id="join-experience-btn"
+          className="mt-1 text-black font-bold"
+          style={{
+            fontFamily: "Geometrica, sans-serif",
+            fontWeight: 700,
+            fontSize: "18px",
+            lineHeight: "24px",
+            letterSpacing: "0%",
+            verticalAlign: "middle",
+          }}
+        >
+          JOIN THE EXPERIENCE
+        </p>
       </Button>
+
+      <div className="w-full flex justify-center mt-2">
+        <p className="text-[#D5D5D5] text-[16px]" style={{ marginLeft: "-86px" }}>
+          Don’t have an account?{" "}
+          <a href="/signup" className="text-[#D5D5D5] font-bold underline">
+            SIGN UP HERE
+          </a>
+        </p>
+      </div>
     </form>
   );
 };

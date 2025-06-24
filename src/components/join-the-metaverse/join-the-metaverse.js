@@ -58,17 +58,17 @@ const JoinTheMetaverse = () => {
           <div>
             <Stack spacing={1} sx={{ mb: 2 }}>
               <Typography
-                variant="h4"
-                className={`text-[#14332D] text-[44px] font-bold font-weight-900 flex items-center`}
+                variant=""
+                className="text-white text-[32px] font-bold font-weight-900 flex items-center"
               >
-                Journey Through Ancient AlUla
+                Log in to your account
               </Typography>
             </Stack>
             <Stack spacing={1} sx={{ mb: 5 }}>
               <Typography
-                className={`text-[#14332D] text-[24px] font-light flex items-center`}
+                className="text-[#8A8A8A] text-[18px] font-light flex items-center"
               >
-                Explore the Virtual AlUla Heritage Experience!
+                Join the community of adventures.
               </Typography>
             </Stack>
             <Login />
