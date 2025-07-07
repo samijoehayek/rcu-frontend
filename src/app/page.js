@@ -15,30 +15,86 @@ const Home = () => {
         {/* Row 2: Main Content with Two Columns - 40/60 split, image hides on medium and smaller screens */}
         <div className="flex flex-grow h-full w-full">
           {/* JoinTheMetaverse component - 40% on larger screens, 100% on medium and smaller screens */}
-          <div className="w-full md:w-2/5 ml-10 mt-10 flex items-center justify-center bg-[#161515D9] border border-[#D7AD5F] ">
-            <div className="py-4 px-20">
-              <div className="flex items-center justify-start mb-8">
-                <div>
-                  <Image
-                    src="/comission-logo.png"
-                    alt="Commission Logo"
-                    width={150} // Half of original 300
-                    height={25} // Half of original 50
-                  />
-                </div>
-                <div className="mx-8 h-10 w-px bg-[#BA9863]"></div>
-                {/* Vertical separator line */}
-                <div>
-                  <Image
-                    src="/alula-logo.png"
-                    alt="Alula Logo"
-                    width={60} // Half of original 120
-                    height={25} // Half of original 50
-                  />
-                </div>
-              </div>
+          <div className="relative w-full md:w-2/5 ml-10 mt-10 flex items-center justify-center ">
+            {/* Border layer */}
+            <div
+              className="absolute inset-0"
+              style={{
+                clipPath:
+                  "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
+                background: "#D7AD5F",
+                zIndex: 0,
+              }}
+            />
+            {/* Content layer */}
+            <div
+              className="relative flex items-center justify-center w-full h-full"
+              style={{
+                clipPath:
+                  "polygon(24px 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%, 0 24px)",
+                background: "#161515",
+                zIndex: 1,
+              }}
+            >
+              {/* Top-left dotted triangle with less white and more spread dots */}
+              <div
+                className="absolute top-0 left-0 pointer-events-none"
+                style={{
+                  width: "264px",
+                  height: "264px",
+                  backgroundImage:
+                    "radial-gradient(rgba(179, 179, 179, 0.28) 1.5px, transparent 1.5px)",
+                  backgroundSize: "6px 6px", // more spread out
+                  clipPath: "polygon(0 0, 100% 0, 0 100%)",
+                  zIndex: 2,
+                  maskImage:
+                    "radial-gradient(circle at 0 0, black 7%, transparent 18%)",
+                  WebkitMaskImage:
+                    "radial-gradient(circle at 0 0, black 7%, transparent 18%)",
+                }}
+              />
+              {/* Bottom-right dotted triangle with less white and more spread dots */}
+              <div
+                className="absolute bottom-0 right-0 pointer-events-none"
+                style={{
+                  width: "270px",
+                  height: "200px",
+                  backgroundImage:
+                    "radial-gradient(rgba(179, 179, 179, 0.28) 1.5px, transparent 1.5px)",
+                  backgroundSize: "6px 6px", // more spread out
+                  clipPath: "polygon(100% 100%, 0 100%, 100% 0)",
+                  zIndex: 2,
+                  maskImage:
+                    "radial-gradient(ellipse at 100% 100%, black 7%, transparent 22%)",
+                  WebkitMaskImage:
+                    "radial-gradient(circle at 100% 100%, black 7%, transparent 18%)",
+                }}
+              />
 
-              <JoinTheMetaverse />
+              <div className="py-4 px-20">
+                <div className="flex items-center justify-start mb-8">
+                  <div>
+                    <Image
+                      src="/comission-logo.png"
+                      alt="Commission Logo"
+                      width={150} // Half of original 300
+                      height={25} // Half of original 50
+                    />
+                  </div>
+                  <div className="mx-8 h-10 w-px bg-[#BA9863]"></div>
+                  {/* Vertical separator line */}
+                  <div>
+                    <Image
+                      src="/alula-logo.png"
+                      alt="Alula Logo"
+                      width={60} // Half of original 120
+                      height={25} // Half of original 50
+                    />
+                  </div>
+                </div>
+
+                <JoinTheMetaverse />
+              </div>
             </div>
           </div>
 

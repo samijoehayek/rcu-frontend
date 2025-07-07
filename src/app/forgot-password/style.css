@@ -1,0 +1,19 @@
+.body{
+    
+}
+
+.modal-card {
+  width: 700px;
+  height: 587px;
+  background: #161515D9;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  clip-path: polygon(16px 0px, 100% 0px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0px 100%, 0px 16px);
+  box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.5);
+  border: 0.1px solid #9E8556;
+  padding: 0;
+  z-index: 10;
+  overflow: visible;
+  position: fixed;
+}

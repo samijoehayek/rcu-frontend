@@ -74,7 +74,7 @@ const Login = () => {
           name="username"
           fullWidth
           helperText={formik.touched.username && formik.errors.username}
-          label="Username"
+          label="Username or Email"
           onBlur={formik.handleBlur}
           onChange={formik.handleChange}
           value={formik.values.username}
@@ -82,7 +82,7 @@ const Login = () => {
           type="username"
           sx={{
             "& .MuiOutlinedInput-root": {
-              borderRadius: 0, // Square corners
+              borderRadius: "4px", // Slightly rounded corners
               "& fieldset": {
                 borderColor: "#82807E", // Changed border color
               },
@@ -125,7 +125,7 @@ const Login = () => {
           autoComplete="new-password"
           sx={{
             "& .MuiOutlinedInput-root": {
-              borderRadius: 0, // Square corners
+              borderRadius: "4px", // Slightly rounded corners
               "& fieldset": {
                 borderColor: "#82807E", // Changed border color
               },
@@ -216,8 +216,14 @@ const Login = () => {
         />
         <Typography
           variant="body2"
-          sx={{ color: "#D5D5D5", cursor: "pointer", mt: "5px" }} // white
-          onClick={() => router.push("/forgot-password-email")}
+          sx={{
+            color: "#D5D5D5",
+            cursor: "pointer",
+            mt: "5px",
+            textDecoration: "underline", // underline the text
+            fontWeight: "bold", // make it bold
+          }}
+          onClick={() => router.push("/forgot-password")}
         >
           Forgot password?
         </Typography>
@@ -264,8 +270,11 @@ const Login = () => {
       </Button>
 
       <div className="w-full flex justify-center mt-2">
-        <p className="text-[#D5D5D5] text-[16px]" style={{ marginLeft: "-86px" }}>
-          Don’t have an account?{" "}
+        <p
+          className="text-[#D5D5D5] text-[16px]"
+          style={{ marginLeft: "-0px" }} // moved less to the left, so it's more to the right
+        >
+          Don't have an account?{" "}
           <a href="/signup" className="text-[#D5D5D5] font-bold underline">
             SIGN UP HERE
           </a>
