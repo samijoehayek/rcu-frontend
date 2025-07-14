@@ -208,7 +208,7 @@ const Login = () => {
               variant="body2"
               sx={{ color: "#D5D5D5", fontSize: 14, mt: "5px" }}
             >
-              keep me logged in
+              Keep me logged in
             </Typography>
           }
           labelPlacement="end"
@@ -225,7 +225,7 @@ const Login = () => {
           }}
           onClick={() => router.push("/forgot-password")}
         >
-          Forgot password?
+          Forgot password
         </Typography>
       </Box>
       <Button
@@ -258,8 +258,8 @@ const Login = () => {
           className="mt-1 text-black font-bold"
           style={{
             fontFamily: "Geometrica, sans-serif",
-            fontWeight: 700,
-            fontSize: "18px",
+            fontWeight: 1000,
+            fontSize: "14px",
             lineHeight: "24px",
             letterSpacing: "0%",
             verticalAlign: "middle",
