@@ -5,7 +5,7 @@ import localFont from 'next/font/local'
 const geometrica = localFont({
   src: [
     {
-      path: './fonts/Geometrica-Regular.otf',
+      path: '../../public/fonts/Geometrica-Regular.otf',
       weight: '400',
       style: 'normal',
     }
