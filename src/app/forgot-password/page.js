@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { sendResetPasswordEmail } from "../../axios/index"; // adjust the path if needed
-import './style.css';
 
 export default function ResetPassword() {
   const [message, setMessage] = useState("");
