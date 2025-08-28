@@ -51,8 +51,6 @@ const Login = () => {
             }
             console.log("Login failed: ", error);
           });
-
-        // await auth.signIn(values.username, values.password);
       } catch (err) {
         helpers.setStatus({ success: false });
         helpers.setErrors({ submit: err.message });
@@ -66,46 +64,52 @@ const Login = () => {
       noValidate
       onSubmit={formik.handleSubmit}
       autoComplete="off"
-      style={{ marginTop: "2rem" }} // Added more space at the top
+      style={{ marginTop: "2rem" }}
     >
       <Stack spacing={3}>
         <TextField
-          error={!!(formik.touched.username && formik.errors.username)}
+          error={!!(formik.touched.username && formik.errors.username) || loginError}
           name="username"
           fullWidth
           helperText={formik.touched.username && formik.errors.username}
           label="Username or Email"
           onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
+          onChange={(e) => {
+            formik.handleChange(e);
+            setLoginError(false);
+          }}
           value={formik.values.username}
           autoComplete="new-username"
           type="username"
           sx={{
             "& .MuiOutlinedInput-root": {
-              borderRadius: "4px", // Slightly rounded corners
+              borderRadius: "4px",
               "& fieldset": {
-                borderColor: "#82807E", // Changed border color
+                borderColor: "#82807E",
               },
               "&:hover fieldset": {
-                borderColor: "#82807E", // Same color on hover
+                borderColor: "#82807E",
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#82807E", // Same color when focused
+                borderColor: "#82807E",
               },
               "&.Mui-error fieldset": {
-                borderColor: "#FF5A5A !important",
+                borderColor: "#B64034 !important",
               },
             },
             "& .MuiInputLabel-root": {
-              color: "#82807E", // Changed label color
+              color: "#82807E",
               opacity: 1,
               "&.Mui-focused": {
-                color: "#82807E", // Same color when focused
+                color: "#82807E",
                 opacity: 1,
+              },
+              "&.Mui-error": {
+                color: "#B64034 !important",
               },
             },
             "& .MuiInputBase-input": {
-              color: "#82807E", // Changed input text color
+              color: "#82807E",
             },
             "& .MuiFormHelperText-root": {
               color: "#FF5A5A !important",
@@ -113,42 +117,48 @@ const Login = () => {
           }}
         />
         <TextField
-          error={!!(formik.touched.password && formik.errors.password)}
+          error={!!(formik.touched.password && formik.errors.password) || loginError}
           fullWidth
           helperText={formik.touched.password && formik.errors.password}
           label="Password"
           name="password"
           onBlur={formik.handleBlur}
-          onChange={formik.handleChange}
+          onChange={(e) => {
+            formik.handleChange(e);
+            setLoginError(false);
+          }}
           type={showPassword ? "text" : "password"}
           value={formik.values.password}
           autoComplete="new-password"
           sx={{
             "& .MuiOutlinedInput-root": {
-              borderRadius: "4px", // Slightly rounded corners
+              borderRadius: "4px",
               "& fieldset": {
-                borderColor: "#82807E", // Changed border color
+                borderColor: "#82807E",
               },
               "&:hover fieldset": {
-                borderColor: "#82807E", // Same color on hover
+                borderColor: "#82807E",
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#82807E", // Same color when focused
+                borderColor: "#82807E",
               },
               "&.Mui-error fieldset": {
-                borderColor: "#FF5A5A !important",
+                borderColor: "#B64034 !important",
               },
             },
             "& .MuiInputLabel-root": {
-              color: "#82807E", // Changed label color
+              color: "#82807E",
               opacity: 1,
               "&.Mui-focused": {
-                color: "#82807E", // Same color when focused
+                color: "#82807E",
                 opacity: 1,
+              },
+              "&.Mui-error": {
+                color: "#B64034 !important",
               },
             },
             "& .MuiInputBase-input": {
-              color: "#82807E", // Changed input text color
+              color: "#82807E",
             },
             "& .MuiFormHelperText-root": {
               color: "#FF5A5A !important",
@@ -162,9 +172,9 @@ const Login = () => {
                   edge="end"
                 >
                   {showPassword ? (
-                    <VisibilityIcon sx={{ color: "#82807E" }} /> // Changed icon color
+                    <VisibilityIcon sx={{ color: "#82807E" }} />
                   ) : (
-                    <VisibilityOffIcon sx={{ color: "#82807E" }} /> // Changed icon color
+                    <VisibilityOffIcon sx={{ color: "#82807E" }} />
                   )}
                 </IconButton>
               </InputAdornment>
@@ -196,9 +206,9 @@ const Login = () => {
               checked={rememberMe}
               onClick={() => setRememberMe(!rememberMe)}
               sx={{
-                color: "#FFFFFF", // Changed checkbox color
+                color: "#FFFFFF",
                 "&.Mui-checked": {
-                  color: "#30533E", // Changed checked color
+                  color: "#30533E",
                 },
               }}
             />
@@ -220,8 +230,8 @@ const Login = () => {
             color: "#D5D5D5",
             cursor: "pointer",
             mt: "5px",
-            textDecoration: "underline", // underline the text
-            fontWeight: "bold", // make it bold
+            textDecoration: "underline",
+            fontWeight: "bold",
           }}
           onClick={() => router.push("/forgot-password")}
         >
@@ -238,7 +248,8 @@ const Login = () => {
           background: "#D7AD5F !important",
           border: "none",
           color: "#14332D",
-          width: "399px",
+          width: "100%",
+          maxWidth: "399px",
           height: "56px",
           boxShadow: "none",
           "&:hover": {
@@ -268,18 +279,6 @@ const Login = () => {
           JOIN THE EXPERIENCE
         </p>
       </Button>
-
-      <div className="w-full flex justify-center mt-2">
-        <p
-          className="text-[#D5D5D5] text-[16px]"
-          style={{ marginLeft: "-0px" }} // moved less to the left, so it's more to the right
-        >
-          Don't have an account?{" "}
-          <a href="/signup" className="text-[#D5D5D5] font-bold underline">
-            SIGN UP HERE
-          </a>
-        </p>
-      </div>
     </form>
   );
 };

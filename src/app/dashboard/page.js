@@ -122,19 +122,19 @@ const Dashboard = () => {
   const { unityProvider, loadingProgression, isLoaded } = useUnityContext({
     loaderUrl: isMobile
       ? "BuildMobile/Build/Build.loader.js"
-      : "https://metaverse-mt.oss-me-central-1.aliyuncs.com/Build/Build/Build.loader.js",
+      : "https://metaverse-rcu.oss-me-central-1.aliyuncs.com/Build/Build/Build.loader.js",
     dataUrl: isMobile
       ? "BuildMobile/Build/Build.data.unityweb"
-      : "https://metaverse-mt.oss-me-central-1.aliyuncs.com/Build/Build/Build.data.unityweb",
+      : "https://metaverse-rcu.oss-me-central-1.aliyuncs.com/Build/Build/Build.data.unityweb",
     frameworkUrl: isMobile
       ? "BuildMobile/Build/Build.framework.js.unityweb"
-      : "https://metaverse-mt.oss-me-central-1.aliyuncs.com/Build/Build/Build.framework.js.unityweb",
+      : "https://metaverse-rcu.oss-me-central-1.aliyuncs.com/Build/Build/Build.framework.js.unityweb",
     codeUrl: isMobile
       ? "BuildMobile/Build/Build.wasm.unityweb"
-      : "https://metaverse-mt.oss-me-central-1.aliyuncs.com/Build/Build/Build.wasm.unityweb",
+      : "https://metaverse-rcu.oss-me-central-1.aliyuncs.com/Build/Build/Build.wasm.unityweb",
     streamingAssetsUrl: isMobile
       ? "BuildMobile/StreamingAssets"
-      : "https://metaverse-mt.oss-me-central-1.aliyuncs.com/Build/StreamingAssets",
+      : "https://metaverse-rcu.oss-me-central-1.aliyuncs.com/Build/StreamingAssets",
     companyName: "CDS",
     productName: "MIC",
     productVersion: "0.1",
