@@ -4,26 +4,21 @@ import Image from "next/image";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { setNewPassword } from "../../axios/index";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation"; // 1. Import useRouter
+import { useSnackbarStore } from "../../app/stores/snackbarStore";
 
-// 1. Create a new component for the form logic that uses the hook.
+// The form component with updated logic
 function ResetPasswordForm() {
   const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
+  // We no longer need the local 'message' state, Zustand handles it now.
+
+  const router = useRouter(); // 3. Initialize the router
+  const showSnackbar = useSnackbarStore((state) => state.showSnackbar); // 4. Get the action from the store
 
   const searchParams = useSearchParams();
   const token = searchParams.get("verificationString");
 
-  // Auto-clear messages after 5 seconds
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => {
-        setMessage("");
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
-
+  // This useEffect for the error message can remain as is
   useEffect(() => {
     if (error) {
       const timer = setTimeout(() => {
@@ -60,10 +55,13 @@ function ResetPasswordForm() {
     validateOnChange: false,
     onSubmit: async (values, { setSubmitting }) => {
       setError("");
-      setMessage("");
       try {
         await setNewPassword(token, values.newPassword);
-        setMessage("Password changed successfully!");
+
+        // 5. THIS IS THE MAGIC!
+        // Show the global snackbar and then redirect.
+        showSnackbar("Your password was updated!");
+        router.push("/"); // Redirect to the homepage
       } catch (err) {
         setError("There was a problem setting your new password.");
       } finally {
@@ -96,7 +94,7 @@ function ResetPasswordForm() {
           position: "fixed",
         }}
       >
-        {/* Top-left gold accent */}
+        {/* Decorative elements remain the same... */}
         <div
           style={{
             position: "absolute",
@@ -110,7 +108,6 @@ function ResetPasswordForm() {
             transform: "rotate(45deg)",
           }}
         />
-        {/* Bottom-right gold accent */}
         <div
           style={{
             position: "absolute",
@@ -124,8 +121,6 @@ function ResetPasswordForm() {
             transform: "rotate(45deg)",
           }}
         />
-
-        {/* Top-left faded dots */}
         <div
           className="absolute top-0 left-0 pointer-events-none"
           style={{
@@ -142,9 +137,6 @@ function ResetPasswordForm() {
             margin: 0,
           }}
         />
-
-        {/* Bottom-right faded dots */}
-
         <div
           style={{
             position: "absolute",
@@ -165,21 +157,17 @@ function ResetPasswordForm() {
           }}
         />
 
-        {/* Content wrapper with padding */}
-        <div
-          className="w-full pt-8 pl-8"
-          style={{ padding: "32px 0 0 32px" }}
-        >
-          {/* Vertical flex parent for stacking elements */}
+        {/* Content wrapper */}
+        <div className="w-full pt-8 pl-8" style={{ padding: "32px 0 0 32px" }}>
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "flex-start",
-              paddingLeft: 118, // Only here!
+              paddingLeft: 118,
             }}
           >
-            {/* Row of logos */}
+            {/* Logos and Back link... */}
             <div className="flex justify-start items-start mt-[28px]">
               <Image
                 src="/comission-logo.png"
@@ -195,8 +183,10 @@ function ResetPasswordForm() {
                 height={25}
               />
             </div>
-            {/* Back to log in link with arrow */}
-            <div className="flex items-center cursor-pointer mt-[17.8px]">
+            <div
+              className="flex items-center cursor-pointer mt-[17.8px]"
+              onClick={() => router.push("/login")}
+            >
               <Image
                 src="/icon_chevron-left.svg"
                 alt="Back Arrow"
@@ -221,6 +211,7 @@ function ResetPasswordForm() {
             </p>
             {/* Formik Form */}
             <form onSubmit={formik.handleSubmit}>
+              {/* Input fields remain the same... */}
               <div style={{ marginBottom: "16px" }}>
                 <input
                   type="password"
@@ -253,11 +244,11 @@ function ResetPasswordForm() {
                       fontFamily: "Geometrica, sans-serif",
                     }}
                   >
-                    {formik.errors.newPassword}
+                    {" "}
+                    {formik.errors.newPassword}{" "}
                   </div>
                 )}
               </div>
-
               <div style={{ marginBottom: "16px" }}>
                 <input
                   type="password"
@@ -290,11 +281,11 @@ function ResetPasswordForm() {
                       fontFamily: "Geometrica, sans-serif",
                     }}
                   >
-                    {formik.errors.confirmPassword}
+                    {" "}
+                    {formik.errors.confirmPassword}{" "}
                   </div>
                 )}
               </div>
-
               <button
                 type="submit"
                 className="rounded-xl border-none font-bold text-base font-[Geometrica] w-[398px] h-[62px] px-6 py-2 cursor-pointer"
@@ -311,9 +302,7 @@ function ResetPasswordForm() {
             {error && (
               <div style={{ color: "red", marginTop: 10 }}>{error}</div>
             )}
-            {message && (
-              <div style={{ color: "green", marginTop: 10 }}>{message}</div>
-            )}
+            {/* The local success message is no longer needed */}
           </div>
         </div>
       </div>
@@ -321,8 +310,7 @@ function ResetPasswordForm() {
   );
 }
 
-
-// 2. Your main export now just sets up the page and the Suspense boundary.
+// The main export remains the same
 export default function ResetPassword() {
   return (
     <div
@@ -330,7 +318,7 @@ export default function ResetPassword() {
         minHeight: "100vh",
         height: "100vh",
         width: "100vw",
-        backgroundImage: "url('/desert-back.png')",
+        backgroundImage: "url('/desert-back.jpg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",

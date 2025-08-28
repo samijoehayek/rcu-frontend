@@ -6,7 +6,7 @@ const BackgroundImage = ({ imageName }) => {
     <>
       <div className="absolute right-0 w-[100%] h-[100%]">
         <Image
-          src={`/${imageName}.png`}
+          src={`/${imageName}.jpg`}
           alt="Background"
           fill={true}
           quality={100}

@@ -1,9 +1,10 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { sendResetPasswordEmail } from "../../axios/index"; // adjust the path if needed
+import { sendResetPasswordEmail } from "../../axios/index"; 
+
 
 export default function ResetPassword() {
   const [message, setMessage] = useState("");
@@ -11,22 +12,14 @@ export default function ResetPassword() {
 
   // Auto-clear messages after 5 seconds
   useEffect(() => {
-    if (message) {
+    if (message || error) {
       const timer = setTimeout(() => {
         setMessage("");
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [message]);
-
-  useEffect(() => {
-    if (error) {
-      const timer = setTimeout(() => {
         setError("");
       }, 5000);
       return () => clearTimeout(timer);
     }
-  }, [error]);
+  }, [message, error]);
 
   const formik = useFormik({
     initialValues: {
@@ -37,14 +30,17 @@ export default function ResetPassword() {
         .email("Please enter a valid email address")
         .required("Email is required"),
     }),
-    onSubmit: async (values) => {
+    onSubmit: async (values, { setSubmitting, resetForm }) => {
       setMessage("");
       setError("");
       try {
         await sendResetPasswordEmail(values.email);
         setMessage("If this email exists, a reset link has been sent.");
+        resetForm();
       } catch (err) {
         setError("There was a problem sending the reset link.");
+      } finally {
+        setSubmitting(false);
       }
     },
   });
@@ -53,220 +49,180 @@ export default function ResetPassword() {
     <div
       style={{
         minHeight: "100vh",
-        height: "100vh",
         width: "100vw",
-        backgroundImage: "url('/desert-back.png')",
+        backgroundImage: "url('/desert-back.jpg')", // Ensure this path is correct
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         margin: 0,
-        padding: 0,
+        // Using flex to center the box vertically and horizontally
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '1rem', // Added padding for small screens
       }}
     >
+      {/* Main content box with responsive width and preserved style */}
       <div
-        className="fixed inset-0 flex items-center justify-center"
+        className="relative w-full max-w-[700px] bg-[#161515D9] border border-[#9E8556] shadow-2xl"
         style={{
-          zIndex: 10,
+          minHeight: "587px", // Use min-height to allow content to expand
+          clipPath:
+            "polygon(16px 0px, 100% 0px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0px 100%, 0px 16px)",
         }}
       >
+        {/* Decorative elements remain the same */}
         <div
-          className="fixed flex flex-col items-start"
           style={{
-            width: "700px",
-            height: "587px",
-            background: "#161515D9 ",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            clipPath:
-              "polygon(16px 0px, 100% 0px, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0px 100%, 0px 16px)",
-            boxShadow: "0px 4px 32px rgba(0, 0, 0, 0.5)",
-            border: "0.1px solid #9E8556",
-            padding: 0,
-            zIndex: 10,
-            overflow: "visible",
-            position: "fixed",
+            position: "absolute",
+            top: -27,
+            left: -9,
+            width: "27px",
+            height: "46px",
+            background: "#E8C27A",
+            zIndex: 2,
+            pointerEvents: "none",
+            transform: "rotate(45deg)",
           }}
-        >
-          {/* Top-left gold accent */}
-          <div
-            style={{
-              position: "absolute",
-              top:-27,
-              left: -9,
-              width: "27px",
-              height: "46px",
-              background: "#E8C27A",
-              zIndex: 2,
-              pointerEvents: "none",
-              transform: "rotate(45deg)"
-            }}
-          />
-          {/* Bottom-right gold accent */}
-          <div
-            style={{
-              position: "absolute",
-              bottom: -18,
-              right: -12,
-              width: "27px",
-              height: "36px",
-              background: "#E8C27A",
-              zIndex: 2,
-              pointerEvents: "none",
-              transform: "rotate(45deg)",
-            }}
-          />
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: -18,
+            right: -12,
+            width: "27px",
+            height: "36px",
+            background: "#E8C27A",
+            zIndex: 2,
+            pointerEvents: "none",
+            transform: "rotate(45deg)",
+          }}
+        />
+        <div
+          className="absolute top-0 left-0 pointer-events-none"
+          style={{
+            width: "100px",
+            height: "60px",
+            backgroundImage:
+              "radial-gradient(rgba(179, 179, 179, 0.28) 1.5px, transparent 1.5px)",
+            backgroundSize: "6px 6px",
+            zIndex: 2,
+            maskImage:
+              "radial-gradient(ellipse at 0 0, black 7%, transparent 70%)",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            right: 0,
+            bottom: 0,
+            width: "100px",
+            height: "60px",
+            backgroundImage:
+              "radial-gradient(rgba(179, 179, 179, 0.28) 1.5px, transparent 1.0px)",
+            backgroundSize: "6px 6px",
+            zIndex: 2,
+            maskImage:
+              "radial-gradient(ellipse at 100% 100%, black 7%, transparent 80%)",
+            pointerEvents: "none",
+          }}
+        />
 
-          {/* Top-left faded dots */}
-          <div
-            className="absolute top-0 left-0 pointer-events-none"
-            style={{
-              width: "100px",
-              height: "60px",
-              backgroundImage:
-                "radial-gradient(rgba(179, 179, 179, 0.28) 1.5px, transparent 1.5px)",
-              backgroundSize: "6px 6px",
-              zIndex: 2,
-              maskImage:
-                "radial-gradient(ellipse at 0 0, black 7%, transparent 70%)",
-              WebkitMaskImage:
-                "radial-gradient(ellipse at 0 0, black 7%, transparent 70%)",
-              margin: 0,
-            }}
-          />
-
-          {/* Bottom-right faded dots */}
-       
-              <div
-              style={{
-                position: "absolute",
-                right: 0,
-                bottom: 0,
-                width: "100px",
-                height: "60px",
-                backgroundImage:
-                  "radial-gradient(rgba(179, 179, 179, 0.28) 1.5px, transparent 1.0px)",
-                backgroundSize: "6px 6px",
-                zIndex: 2,
-                maskImage:
-                  "radial-gradient(ellipse at 100% 100%, black 7%, transparent 80%)",
-                WebkitMaskImage:
-                  "radial-gradient(ellipse at 100% 100%, black 7%, transparent 80%)",
-                margin: 0,
-                pointerEvents: "none",
-              }}
+        {/* Content wrapper with responsive padding and alignment */}
+        <div className="w-full h-full flex flex-col items-center p-6 sm:p-8">
+          {/* Logos with increased size */}
+          <div className="flex flex-wrap justify-center items-center mt-7 mb-4 gap-6">
+            <Image
+              src="/comission-logo.png" // Ensure this path is correct
+              alt="Commission Logo"
+              width={160} // Increased size
+              height={33}
             />
+            <div className="mx-2 h-11 w-px bg-[#695C48]"></div>
+            <Image
+              src="/alula-logo.png" // Ensure this path is correct
+              alt="Alula Logo"
+              width={50} // Increased size
+              height={28}
+            />
+          </div>
+          
+          {/* Back to log in link */}
+          <a href="/login" className="flex items-center cursor-pointer text-white text-xs self-start md:self-center mb-4 ml-4 md:ml-[-150px]">
+            <Image
+              src="/icon_chevron-left.svg" // Ensure this path is correct
+              alt="Back Arrow"
+              width={24}
+              height={24}
+              className="mr-2"
+            />
+            Back to log in
+          </a>
 
-          {/* Content wrapper with padding */}
-          <div className="w-full pt-8 pl-8" style={{ padding: "32px 0 0 32px" }}>
-            {/* Vertical flex parent for stacking elements */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-                paddingLeft: 118, // Only here!
-              }}
+          {/* Reset Password Section with responsive width */}
+          <div className="w-full max-w-md text-center sm:text-left mt-5 px-4 sm:px-0">
+            <h2
+              className="text-white text-2xl font-[Geometrica]"
+              style={{ margin: 0, marginBottom: -3 }}
             >
-              {/* Row of logos */}
-              <div className="flex justify-start items-start mt-[28px]">
-                <Image
-                  src="/comission-logo.png"
-                  alt="Commission Logo"
-                  width={146}
-                  height={30}
+              Reset Password
+            </h2>
+            <p
+              className="text-base font-[Geometrica] text-[#8A8A8A] mt-2 mb-11"
+            >
+              Enter your email to change your password
+            </p>
+
+            {/* Formik Form */}
+            <form onSubmit={formik.handleSubmit} className="w-full">
+              <div className="mb-4">
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Email"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className="w-full h-[62px] px-3 py-2 rounded-md text-base font-[Geometrica] bg-[#232323] text-white outline-none"
+                  style={{
+                    border: formik.touched.email && formik.errors.email
+                      ? "1px solid #FF5A5A"
+                      : "1px solid #666"
+                  }}
                 />
-                <div
-                  className="mx-[23px] mt-[-6px] h-[44px] w-px bg-[#695C48]"
-                ></div>
-                <Image
-                  src="/alula-logo.png"
-                  alt="Alula Logo"
-                  width={45}
-                  height={25}
-                />
-              </div>
-              {/* Back to log in link with arrow */}
-              <div
-                className="flex items-center cursor-pointer mt-[17.8px]"
-              >
-                <Image
-                  src="/icon_chevron-left.svg"
-                  alt="Back Arrow"
-                  width={24}
-                  height={24}
-                  className="mr-2 ml-[-5px]"
-                />
-                <span className="text-white text-[12px]">
-                  Back to log in
-                </span>
+                {formik.touched.email && formik.errors.email && (
+                  <div
+                    style={{
+                      color: "#FF5A5A",
+                      fontSize: "14px",
+                      marginTop: "8px",
+                      fontFamily: "Geometrica, sans-serif",
+                      textAlign: 'left'
+                    }}
+                  >
+                    {formik.errors.email}
+                  </div>
+                )}
               </div>
 
-              {/* Reset Password Section */}
-              <h2
-                className="text-white text-2xl font-[Geometrica] text-[28px]"
-                style={{ margin: 0, marginBottom: -3 , marginTop:37}}
+              <button
+                type="submit"
+                disabled={!formik.isValid || formik.isSubmitting}
+                className="rounded-xl border-none font-bold text-base font-[Geometrica] w-full h-[62px] cursor-pointer px-6 py-2 transition-colors duration-300"
+                style={{
+                  background: (!formik.isValid || formik.isSubmitting) ? '#36373E' : '#D7AD5F',
+                  color: (!formik.isValid || formik.isSubmitting) ? 'rgba(255, 255, 255, 0.5)' : '#1d1d1d',
+                }}
               >
-                Reset Password
-              </h2>
-              <p
-                className="text-base mb-[43px] font-[Geometrica] text-[#8A8A8A] mt-2 mb-11 text-[16px]"
-                style={{ margin: "8px 0 43px 0" }}
-              >
-                Enter your email to change your password
-              </p>
-              
-              {/* Formik Form */}
-              <form onSubmit={formik.handleSubmit}>
-                <div style={{ marginBottom: "16px" }}>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email"
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    className={`w-[398px] h-[62px] px-3 py-2 rounded-md border text-base font-[Geometrica] bg-[#232323] text-white outline-none ${
-                      formik.touched.email && formik.errors.email
-                        ? 'border-red-500'
-                        : 'border-gray-500'
-                    }`}
-                    style={{ 
-                      border: formik.touched.email && formik.errors.email 
-                        ? "1px solid #FF5A5A" 
-                        : "1px solid #666"
-                    }}
-                  />
-                  {formik.touched.email && formik.errors.email && (
-                    <div 
-                      style={{ 
-                        color: "#FF5A5A", 
-                        fontSize: "14px", 
-                        marginTop: "8px",
-                        fontFamily: "Geometrica, sans-serif"
-                      }}
-                    >
-                      {formik.errors.email}
-                    </div>
-                  )}
-                </div>
-                
-                <button
-                  type="submit"
-                  className="rounded-xl border-none font-bold text-base font-[Geometrica] w-[398px] h-[62px] cursor-pointer px-6 py-2"
-                  style={{
-                    background: "#D7AD5F",
-                    color: "#1d1d1d",
-                    marginTop: formik.touched.email && formik.errors.email ? "16px" : "39px"
-                  }}
-                >
-                  Reset Password
-                </button>
-              </form>
-              
-              {message && <div style={{ color: "green", marginTop: 10 }}>{message}</div>}
-              {error && <div style={{ color: "red", marginTop: 10 }}>{error}</div>}
-              {/* Add more vertically stacked elements here */}
+                {formik.isSubmitting ? 'Sending...' : 'Reset Password'}
+              </button>
+            </form>
+
+            {/* API Messages */}
+            <div className="h-6 mt-4 text-center">
+                {message && <div style={{ color: "green" }}>{message}</div>}
+                {error && <div style={{ color: "red" }}>{error}</div>}
             </div>
           </div>
         </div>
