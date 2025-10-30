@@ -2,7 +2,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Unity, useUnityContext } from "react-unity-webgl";
 import { useMediaQuery } from "react-responsive";
-import bg from "../../../public/images/webgl-loader2.jpg";
+import bg from "../../../public/LoaderRCU.png";
 // import { getUserSession, createUserSession } from "@/axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -172,7 +172,7 @@ const Dashboard = () => {
               {/* This is the Logo */}
               <div className="w-full flex justify-center mt-8">
                 <Image
-                  src="/images/stc-logo.png"
+                  src="/rcu-logos.png"
                   alt="STC Logo"
                   width={240}
                   height={80}
@@ -199,7 +199,7 @@ const Dashboard = () => {
                   className={`font-sans text-5xl font-bold text-white mb-16 mt-4 text-center`}
                   style={{ fontFamily: "AlbertFont" }}
                 >
-                  Saudi Tourism Metaverse Loading...
+                  The Immersive Dadan Experience...
                 </h1>
               </div>
               {/* This is the loader */}
