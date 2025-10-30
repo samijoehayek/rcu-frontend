@@ -174,8 +174,8 @@ const Dashboard = () => {
                 <Image
                   src="/rcu-logos.png"
                   alt="STC Logo"
-                  width={240}
-                  height={80}
+                  width={300}
+                  height={140}
                 />
               </div>
               {/* This is the title and sentences animation */}
